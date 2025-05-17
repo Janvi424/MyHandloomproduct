@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Handloom Products</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: Arial, sans-serif;
+      color: #d6cbcb;
+      overflow-x: hidden;
+      background: #121218;
+      position: relative;
+      perspective: 1000px;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      z-index: 1;
+    }
+
+    .background-spheres {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: visible;
+      pointer-events: none;
+      z-index: 0;
+      perspective: 800px;
+    }
+
+    .sphere {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle at center, rgba(230,126,34,0.9), transparent 70%);
+      filter: drop-shadow(0 0 15px rgba(230,126,34,0.7));
+      animation-timing-function: ease-in-out;
+      animation-iteration-count: infinite;
+      mix-blend-mode: screen;
+    }
+
+    .sphere1 { width: 120px; height: 120px; top: 20%; left: 15%; animation: floatUpDown1 18s infinite; }
+    .sphere2 { width: 80px; height: 80px; top: 55%; left: 70%; background: radial-gradient(circle at center, rgba(41,128,185,0.9), transparent 70%); filter: drop-shadow(0 0 20px rgba(41,128,185,0.8)); animation: floatUpDown2 22s infinite 6s; }
+    .sphere3 { width: 160px; height: 160px; top: 75%; left: 35%; background: radial-gradient(circle at center, rgba(155,89,182,0.9), transparent 70%); filter: drop-shadow(0 0 25px rgba(155,89,182,0.8)); animation: floatUpDown3 20s infinite 3s; }
+    .sphere4 { width: 100px; height: 100px; top: 40%; left: 50%; background: radial-gradient(circle at center, rgba(39,174,96,0.85), transparent 70%); filter: drop-shadow(0 0 18px rgba(39,174,96,0.7)); animation: floatUpDown4 19s infinite 9s; }
+
+    @keyframes floatUpDown1 {
+      0%, 100% { transform: translate3d(0, 0, 0) rotateY(0deg); }
+      50% { transform: translate3d(0, -30px, 30px) rotateY(180deg); }
+    }
+    @keyframes floatUpDown2 {
+      0%, 100% { transform: translate3d(0, 0, 0) rotateY(0deg); }
+      50% { transform: translate3d(0, 25px, -20px) rotateY(180deg); }
+    }
+    @keyframes floatUpDown3 {
+      0%, 100% { transform: translate3d(0, 0, 0) rotateY(0deg); }
+      50% { transform: translate3d(0, -40px, 25px) rotateY(180deg); }
+    }
+    @keyframes floatUpDown4 {
+      0%, 100% { transform: translate3d(0, 0, 0) rotateY(0deg); }
+      50% { transform: translate3d(0, 30px, -15px) rotateY(180deg); }
+    }
+
+    .header-container {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 20px;
+    }
+
+    .header-container img {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 20px;
+      border: 2px solid #fff;
+      box-shadow: 0 0 15px rgba(255,255,255,0.3);
+    }
+
+    .company-title {
+      font-size: 48px;
+      font-weight: bold;
+      color: white;
+      letter-spacing: 1px;
+      text-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
+    }
+
+    form {
+      text-align: center;
+      margin: 30px 0;
+    }
+
+    select, label {
+      color: white;
+      background-color: #333;
+      border: none;
+      padding: 5px 12px;
+      border-radius: 5px;
+      margin-right: 10px;
+      font-weight: 600;
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+      transition: background-color 0.3s ease;
+    }
+
+    select:hover, label:hover {
+      background-color: #555;
+      cursor: pointer;
+    }
+
+    .products {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      padding: 20px;
+    }
+
+    .product {
+      width: 280px;
+      background-color: #111;
+      border: 1px solid #444;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+      padding: 10px;
+      text-align: center;
+      margin-bottom: 20px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .product:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
+      cursor: pointer;
+    }
+
+    .product img {
+      width: 100%;
+      height: 400px;
+      object-fit: contain;
+      background-color: #000;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .product:hover img {
+      transform: scale(1.05);
+    }
+
+    .product h2 {
+      margin: 10px 0 5px;
+      font-size: 20px;
+      color: #fff;
+      text-shadow: 0 0 5px rgba(255,255,255,0.4);
+    }
+
+    .product p {
+      margin: 5px 0;
+      color: #ccc;
+      font-size: 15px;
+    }
+
+    .product-buttons {
+      margin-top: 15px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 10px 0;
+      border-radius: 25px;
+      border: none;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .btn-order {
+      background-color: #e67e22;
+      color: #fff;
+    }
+
+    .btn-order:hover {
+      background-color: #cf711a;
+    }
+
+    .btn-cart {
+      background-color: #2980b9;
+      color: #fff;
+    }
+
+    .btn-cart:hover {
+      background-color: #24669a;
+    }
+
+    footer {
+      background-color: transparent;
+      padding: 25px 20px;
+      border-top: 1px solid #222;
+      text-align: center;
+      margin-top: auto;
+      color: #bbb;
+      text-shadow: 0 0 5px rgba(0,0,0,0.7);
+      font-size: 15px;
+      line-height: 1.5;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    footer h2 {
+      margin-bottom: 10px;
+      color: #eee;
+      text-shadow: 0 0 8px rgba(255,255,255,0.8);
+      font-size: 28px;
+    }
+
+    footer p {
+      margin: 5px 0;
+      color: #ccc;
+    }
+
+    a {
+      color: #aaa;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    a:hover {
+      text-decoration: underline;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="background-spheres">
+    <div class="sphere sphere1"></div>
+    <div class="sphere sphere2"></div>
+    <div class="sphere sphere3"></div>
+    <div class="sphere sphere4"></div>
+  </div>
+
+  <div class="header-container">
+    <img src="logo.png" alt="Handloom Logo" />
+    <div class="company-title">Handloom Products</div>
+  </div>
+
+  <form>
+    <label for="budget">Budget:</label>
+    <select id="budget" name="budget">
+      <option value="all">All</option>
+      <option value="low">Low (₹0 - ₹1000)</option>
+      <option value="medium">Medium (₹1001 - ₹5000)</option>
+      <option value="high">High (₹5001 - ₹10000)</option>
+    </select>
+    <label for="category">Category:</label>
+    <select id="category" name="category">
+      <option value="all">All</option>
+      <option value="scarves">Scarves</option>
+      <option value="shawls">Shawls</option>
+      <option value="stoles">Stoles</option>
+      <option value="basket">Basket</option>
+    </select>
+  </form>
+
+  <div class="products">
+    <div class="product">
+      <img src="product 1.jpg" alt="Product 1" />
+      <h2>Product 1</h2>
+      <p>Price: ₹800</p>
+      <p>Category: Scarves</p>
+      <div class="product-buttons">
+        <button class="btn btn-order">Order Now</button>
+        <button class="btn btn-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <div class="product">
+      <img src="product 2.jpg" alt="Product 2" />
+      <h2>Product 2</h2>
+      <p>Price: ₹1200</p>
+      <p>Category: Shawls</p>
+      <div class="product-buttons">
+        <button class="btn btn-order">Order Now</button>
+        <button class="btn btn-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <div class="product">
+      <img src="product 3.jpg" alt="Product 3" />
+      <h2>Product 3</h2>
+      <p>Price: ₹3000</p>
+      <p>Category: Stoles</p>
+      <div class="product-buttons">
+        <button class="btn btn-order">Order Now</button>
+        <button class="btn btn-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <div class="product">
+      <img src="product 4.jpg" alt="Product 4" />
+      <h2>Product 4</h2>
+      <p>Price: ₹900</p>
+      <p>Category: Basket</p>
+      <div class="product-buttons">
+        <button class="btn btn-order">Order Now</button>
+        <button class="btn btn-cart">Add to Cart</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <h2>Handloom Products</h2>
+    <p>© 2025 Handloom. All rights reserved.</p>
+    <p>Created by <strong>JANVI SINGH</strong></p>
+    <p>Passionate about traditional handloom and craftsmanship.</p>
+    <p>Contact: <a href="mailto:janvisingh260505@gmail.com">janvisingh260505@gmail.com</a></p>
+  </footer>
+
+</body>
+</html>
